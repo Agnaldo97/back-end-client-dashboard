@@ -1,13 +1,15 @@
 import { AttendanceDTO } from "../../domain/models/AttendanceDTO";
 
-export async function newAttendance(name,cpf): Promise<void> {
+export async function newAttendance(name, cpf): Promise<AttendanceDTO> {
   const newDate = new Date()
   newDate.setHours(newDate.getHours() - 3)
-  await AttendanceDTO.create({
+  const response = await AttendanceDTO.create({
     name: name,
     dateRegister: newDate,
     cpf: cpf
   });
+
+  return response
 }
 
 export async function verifyAttendance(cpf): Promise<AttendanceDTO> {
