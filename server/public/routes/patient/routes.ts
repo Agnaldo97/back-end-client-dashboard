@@ -1,4 +1,4 @@
-import { findPatient } from "./action";
+import { findPatient } from "../../services/action";
 
 import * as express from "express";
 

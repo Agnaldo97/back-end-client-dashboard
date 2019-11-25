@@ -13,8 +13,18 @@ export async function findPatient(cpf): Promise<Object> {
   if (attendance) throw new ServiceError("two-attendances");
 
   const newAttendance: any= await attendanceService.newAttendance(patient.name, patient.cpf);
-  await historicService.newHistoric(patient.id, newAttendance.id);
+  const newHistoric = await historicService.newHistoric(patient.id, newAttendance.id);
   const historics = await historicService.listAllHistoricByIdPatient(patient.id);
+
+  let filterNewHistoric = await historics.filter(historic => 
+    historic.id !== newHistoric.id
+  );
+  
+  for (let historic of filterNewHistoric){
+    if (historic.priority === "" || historic.priority === null){
+      await historicService.updateHistoric(historic);
+    }
+  }
 
   const realUser: any = patient.get({ plain: true });
 

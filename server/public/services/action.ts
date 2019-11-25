@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import { errorHandler } from "../../../domain/errors/Patient";
-import * as service from "../../../public/services/Patient";
+import { errorHandler } from "../../domain/errors/Patient";
+import * as service from "./Patient";
 
 export async function findPatient(
   req: Request,
